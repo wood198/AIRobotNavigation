@@ -2,3 +2,11 @@
 
 import java.io.*;
 import java.util.*;
+
+public class aManhattan {
+
+  public static void aManhattanDistance(char[][] board){
+
+  }
+
+}

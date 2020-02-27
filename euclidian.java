@@ -2,3 +2,11 @@
 
 import java.io.*;
 import java.util.*;
+
+public class euclidian {
+
+  public static void eclidianDistance(char[][] board){
+
+  }
+
+}

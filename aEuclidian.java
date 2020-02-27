@@ -2,3 +2,10 @@
 
 import java.io.*;
 import java.util.*;
+
+public class aEuclidian {
+
+  public static void aEclidianDistance(char[][] board){
+
+  }
+}
