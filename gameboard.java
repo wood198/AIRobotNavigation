@@ -29,8 +29,15 @@ public class gameboard {
     board1 = board1.replaceAll("\r", "").replaceAll("\n", "");
 
     //compute the boardsize
-    char t = board1.charAt(0);
-    boardsize = Integer.parseInt(String.valueOf(t));
+    char s = board1.charAt(1);
+    boolean doubleDigits = isNumeric(String.valueOf(s));
+    if(doubleDigits){
+      String t = board1.substring(0, 2);
+      boardsize = Integer.parseInt(t);
+    }else{
+      char p = board1.charAt(0);
+      boardsize = Integer.parseInt(String.valueOf(p));
+    }
 
     board = new char[boardsize][boardsize];
 
@@ -41,8 +48,16 @@ public class gameboard {
       }
     }
 
-    euclidian.euclidianDistance(board);
-    manhattan.manhattanDistance(board);
+    robot.initializeRobotEnvironment(board);
 
   }
+
+  public static boolean isNumeric(String str) {
+  try {
+    Integer.parseInt(str);
+    return true;
+  } catch(NumberFormatException e){
+    return false;
+  }
+}
 }
