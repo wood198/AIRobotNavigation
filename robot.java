@@ -78,4 +78,10 @@ public class robot {
     board[locationRow][locationCol] = replace.charAt(0);
     return board;
   }
+
+  public static String getLocations(int row, int col){
+    String location = "";
+    location = row + "," + col;
+    return location;
+  }
 }

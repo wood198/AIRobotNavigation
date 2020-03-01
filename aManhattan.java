@@ -35,6 +35,7 @@ public class aManhattan {
     ArrayList<Integer> possibleLeft = new ArrayList<Integer>();
     ArrayList<Integer> possibleRight = new ArrayList<Integer>();
 
+    ArrayList<String> fringe = new ArrayList<String>();
 
     while(true) {
       leftCol = locationCol - 1;
@@ -116,6 +117,21 @@ public class aManhattan {
       locationRow = arr.get(index).get(0);
       locationCol = arr.get(index).get(1);
 
+      arr.remove(index);
+
+      //add the unexpanded nodes to the fringe list
+      for (int j = 0; j < arr.size(); j++) {
+        if (arr.get(j).isEmpty()){
+          continue;
+        } else {
+          int x = arr.get(j).get(0);
+          int y = arr.get(j).get(1);
+          if (!fringe.contains(robot.getLocations(x, y))) {
+            fringe.add(robot.getLocations(x, y));
+          }
+        }
+      }
+
       //update the board with an o and up the cost
       robot.updateBoardAMan(aManBoard, locationRow, locationCol);
       aManCost++;
@@ -128,6 +144,7 @@ public class aManhattan {
       calcs.clear();
     }
 
+    fringeCount = fringe.size();
     nodeCount = fringeCount + aManCost + 1;
 
     //print the board and all appropriate info
