@@ -9,7 +9,7 @@ public class aEuclidian {
 
     double distance = 0;
     double euclidianDistance = 0;
-    
+
     euclidianDistance = euclidian.calculateDistanceEuclidian(robotRow, robotCol, goalRow, goalCol);
 
     distance = cost + euclidianDistance;
@@ -26,7 +26,10 @@ public class aEuclidian {
     int upRow = locationRow - 1;
     int downRow = locationRow + 1;
     int aEuclidCost = 0;
+    int fringeCount = 0;
+    int nodeCount = 0;
 
+    //create the ability to store possible successors
     ArrayList<Integer> possibleUp = new ArrayList<Integer>();
     ArrayList<Integer> possibleDown = new ArrayList<Integer>();
     ArrayList<Integer> possibleLeft = new ArrayList<Integer>();
@@ -39,6 +42,8 @@ public class aEuclidian {
       upRow = locationRow - 1;
       downRow = locationRow + 1;
 
+      //check the locations around where the robot is currently
+      //if it is good add it to a list of possible locations
       if(locationCol > 0){
         if(Character.toString(board[locationRow][leftCol]).equals("g")){
           robot.updateBoardAEuclid(aEuclidBoard, locationRow, locationCol);
@@ -95,19 +100,23 @@ public class aEuclidian {
 
       //loop through list and calc distance on all locations in ArrayList
       for (int i = 0; i < arr.size(); i++) {
-        //System.out.println(arr.get(i));
         row = arr.get(i).get(0);
         col = arr.get(i).get(1);
         calc = calculateDistanceAEuclidian(row, col, goalRow, goalCol, aEuclidCost);
         calcs.add(calc);
       }
 
+      fringeCount += calcs.size() - 1;
+
+      //determine the min of the distances in the list and choose that location
       double min = Collections.min(calcs);
       int index = calcs.indexOf(min);
 
+      //update the current location to the one chosen
       locationRow = arr.get(index).get(0);
       locationCol = arr.get(index).get(1);
 
+      //update the board with an o and up the cost
       robot.updateBoardAEuclid(aEuclidBoard, locationRow, locationCol);
       aEuclidCost++;
 
@@ -119,6 +128,9 @@ public class aEuclidian {
       calcs.clear();
     }
 
+    nodeCount = fringeCount + aEuclidCost + 1;
+
+    //print the board and all appropriate info
     System.out.println("A*Euclidian Strategy Path: ");
     for (int j=0; j < aEuclidBoard.length; j++) {
       for (int k=0; k < aEuclidBoard.length; k++) {
@@ -127,6 +139,7 @@ public class aEuclidian {
       System.out.println("");
     }
     System.out.println("This strategy's path cost: " + aEuclidCost);
-
+    System.out.println("The number of nodes in the search tree when the solution was found: " + nodeCount);
+    System.out.println("");
   }
 }

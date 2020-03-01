@@ -5,13 +5,6 @@ import java.util.*;
 
 public class robot {
   public static void initializeRobotEnvironment(char[][] board){
-    //look around itself to find the . around it
-    //choose . and send it to the aEuclidian / aManhattan to see if its right
-    //if its right
-      //replace . with o in board when moved there
-    //else look at a different . around it
-    //replace the current . with a o
-
     int locationRow = 0;
     int locationCol = 0;
     int goalRow = 0;
@@ -21,7 +14,7 @@ public class robot {
     char[][] aEuclidBoard;
     char[][] aManBoard;
 
-
+    //find the initial and goal locations on the board
     for (int j = 0; j < board.length; j++) {
       for (int k = 0; k < board[j].length; k++) {
         if(Character.toString(board[j][k]).equals("i")){
@@ -35,12 +28,11 @@ public class robot {
       }
     }
 
+    //create the boards used to print solutions for the 4 search strategies
     euclidBoard = new char[board.length][board.length];
     manBoard = new char[board.length][board.length];
     aEuclidBoard = new char[board.length][board.length];
     aManBoard = new char[board.length][board.length];
-
-
 
     for (int j=0; j < board.length; j++) {
       for (int k=0; k < board.length; k++) {
@@ -51,6 +43,7 @@ public class robot {
       }
     }
 
+    //call the 4 search strategies
     euclidian.searchEuclid(euclidBoard, locationRow,locationCol, goalRow, goalCol);
     aEuclidian.searchAEuclid(aEuclidBoard, locationRow,locationCol, goalRow, goalCol);
     manhattan.searchMan(manBoard, locationRow,locationCol, goalRow, goalCol);
@@ -58,24 +51,28 @@ public class robot {
 
   }
 
+  //update the board changing . to o during eudlidian search when the location is changed
   public static char[][] updateBoardEuclid(char[][] board, int locationRow, int locationCol){
     String replace = "o";
     board[locationRow][locationCol] = replace.charAt(0);
     return board;
   }
 
+  //update the board changing . to o during A*Manhatan search when the location is changed
   public static char[][] updateBoardAMan(char[][] board, int locationRow, int locationCol){
     String replace = "o";
     board[locationRow][locationCol] = replace.charAt(0);
     return board;
   }
 
+  //update the board changing . to o during A*Euclidian search when the location is changed
   public static char[][] updateBoardAEuclid(char[][] board, int locationRow, int locationCol){
     String replace = "o";
     board[locationRow][locationCol] = replace.charAt(0);
     return board;
   }
 
+  //update the board changing . to o during Manhatan search when the location is changed
   public static char[][] updateBoardMan(char[][] board, int locationRow, int locationCol){
     String replace = "o";
     board[locationRow][locationCol] = replace.charAt(0);

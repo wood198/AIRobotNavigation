@@ -42,9 +42,17 @@ public class gameboard {
     board = new char[boardsize][boardsize];
 
     //create the board
-    for (int j=0; j < boardsize; j++) {
-      for (int k=0; k < boardsize; k++) {
-        board[j][k] = board1.charAt(k + j*boardsize + 1);
+    if(doubleDigits){
+      for (int j=1; j < boardsize; j++) {
+        for (int k=1; k < boardsize; k++) {
+          board[j][k] = board1.charAt(k + j*boardsize + 1);
+        }
+      }
+    } else {
+      for (int j=0; j < boardsize; j++) {
+        for (int k=0; k < boardsize; k++) {
+          board[j][k] = board1.charAt(k + j*boardsize + 1);
+        }
       }
     }
 
@@ -52,6 +60,7 @@ public class gameboard {
 
   }
 
+  //checks if a string is a number
   public static boolean isNumeric(String str) {
   try {
     Integer.parseInt(str);

@@ -26,7 +26,10 @@ public class aManhattan {
     int upRow = locationRow - 1;
     int downRow = locationRow + 1;
     int aManCost = 0;
+    int fringeCount = 0;
+    int nodeCount = 0;
 
+    //create the ability to store possible successors
     ArrayList<Integer> possibleUp = new ArrayList<Integer>();
     ArrayList<Integer> possibleDown = new ArrayList<Integer>();
     ArrayList<Integer> possibleLeft = new ArrayList<Integer>();
@@ -39,6 +42,8 @@ public class aManhattan {
       upRow = locationRow - 1;
       downRow = locationRow + 1;
 
+      //check the locations around where the robot is currently
+      //if it is good add it to a list of possible locations
       if(locationCol > 0){
         if(Character.toString(board[locationRow][leftCol]).equals("g")){
           robot.updateBoardAMan(aManBoard, locationRow, locationCol);
@@ -95,19 +100,23 @@ public class aManhattan {
 
       //loop through list and calc distance on all locations in ArrayList
       for (int i = 0; i < arr.size(); i++) {
-        //System.out.println(arr.get(i));
         row = arr.get(i).get(0);
         col = arr.get(i).get(1);
         calc = calculateDistanceAManhattan(row, col, goalRow, goalCol, aManCost);
         calcs.add(calc);
       }
 
+      fringeCount += calcs.size() - 1;
+
+      //determine the min of the distances in the list and choose that location
       double min = Collections.min(calcs);
       int index = calcs.indexOf(min);
 
+      //update the current location to the one chosen
       locationRow = arr.get(index).get(0);
       locationCol = arr.get(index).get(1);
 
+      //update the board with an o and up the cost
       robot.updateBoardAMan(aManBoard, locationRow, locationCol);
       aManCost++;
 
@@ -119,6 +128,9 @@ public class aManhattan {
       calcs.clear();
     }
 
+    nodeCount = fringeCount + aManCost + 1;
+
+    //print the board and all appropriate info
     System.out.println("A*Manhattan Strategy Path: ");
     for (int j=0; j < aManBoard.length; j++) {
       for (int k=0; k < aManBoard.length; k++) {
@@ -127,7 +139,8 @@ public class aManhattan {
       System.out.println("");
     }
     System.out.println("This strategy's path cost: " + aManCost);
-
+    System.out.println("The number of nodes in the search tree when the solution was found: " + nodeCount);
+    System.out.println("");
   }
 
 }
