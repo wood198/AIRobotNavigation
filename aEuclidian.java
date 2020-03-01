@@ -35,6 +35,7 @@ public class aEuclidian {
     ArrayList<Integer> possibleLeft = new ArrayList<Integer>();
     ArrayList<Integer> possibleRight = new ArrayList<Integer>();
 
+    ArrayList<ArrayList<Integer>> fringe = new ArrayList<ArrayList<Integer>>();
 
     while(true) {
       leftCol = locationCol - 1;
@@ -106,7 +107,7 @@ public class aEuclidian {
         calcs.add(calc);
       }
 
-      fringeCount += calcs.size() - 1;
+      //System.out.println(arr);
 
       //determine the min of the distances in the list and choose that location
       double min = Collections.min(calcs);
@@ -115,6 +116,24 @@ public class aEuclidian {
       //update the current location to the one chosen
       locationRow = arr.get(index).get(0);
       locationCol = arr.get(index).get(1);
+
+      //remove the coordinates at that index, create new list to put the unused coordinates into it (check if its alredy in there)
+      //to get fringeCount just do list.size()
+      if(arr.size() > 1){
+        arr.remove(index);
+
+        for (int j = 0; j < arr.size(); j++) {
+          // If this element is not present in newList
+          // then add it
+          if (!fringe.contains(arr.get(j))) {
+            fringe.add(arr.get(j));
+          }
+        }
+      }
+
+      // fringe.add(arr).distinct();
+      //System.out.println(arr);
+      System.out.println(fringe);
 
       //update the board with an o and up the cost
       robot.updateBoardAEuclid(aEuclidBoard, locationRow, locationCol);
@@ -128,6 +147,7 @@ public class aEuclidian {
       calcs.clear();
     }
 
+    fringeCount = fringe.size();
     nodeCount = fringeCount + aEuclidCost + 1;
 
     //print the board and all appropriate info
